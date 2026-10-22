@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS clients (
   country VARCHAR(64) NULL,
   status ENUM('active','disabled') NOT NULL DEFAULT 'active',
   finpro_user_id BIGINT UNSIGNED NULL,           -- FinancePro investor UserId
+  open_lock_until DATETIME NULL,                 -- short lock so a double submit can't open two accounts
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
