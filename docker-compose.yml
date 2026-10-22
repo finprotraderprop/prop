@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-crm}
+      MYSQL_USER: ${DB_USER:-crm}
+      MYSQL_PASSWORD: ${DB_PASS:-change-me}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root-change-me}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./api/db/migrations:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  mysql_data:
