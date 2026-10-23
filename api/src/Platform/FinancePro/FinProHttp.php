@@ -44,11 +44,10 @@ final class FinProHttp
         $raw = curl_exec($ch);
         $status = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         if ($raw === false) {
-            $err = curl_error($ch);
-            curl_close($ch);
-            throw new FinProException("FinancePro network error: {$err}");
+            // No curl_close(): the handle is freed when it goes out of scope (PHP 8+), and
+            // curl_close() is deprecated in 8.5.
+            throw new FinProException('FinancePro network error: ' . curl_error($ch));
         }
-        curl_close($ch);
 
         $json = json_decode((string) $raw, true);
         if (!is_array($json)) {
